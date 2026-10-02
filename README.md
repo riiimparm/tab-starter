@@ -2,6 +2,9 @@
 
 Chrome起動時に、いつものページをまとめて開く
 
+<img width="838" height="485" alt="スクリーンショット 2026-10-02 14 33 18" src="https://github.com/user-attachments/assets/55f77cd5-bf0c-4f0d-a23f-2098d8c89d85" />
+
+
 ## インストール
 
 1. このリポジトリをダウンロード(またはクローン)する
