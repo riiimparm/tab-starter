@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>tab-starter 設定</title>
+  <style>
+    :root {
+      --bg: #f4f5f8;
+      --card: #ffffff;
+      --text: #1f2330;
+      --sub: #6b7280;
+      --border: #e5e7eb;
+      --accent: #4f6ef7;
+      --accent-soft: #eaeefe;
+      --danger: #e5484d;
+      --danger-soft: #fdecec;
+      --shadow: 0 1px 2px rgba(16, 24, 40, .06), 0 4px 16px rgba(16, 24, 40, .05);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #14161c;
+        --card: #1d2029;
+        --text: #e8eaf0;
+        --sub: #9aa1b2;
+        --border: #2c303c;
+        --accent: #7b92ff;
+        --accent-soft: #262c4a;
+        --danger: #ff6b70;
+        --danger-soft: #3a2326;
+        --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 4px 16px rgba(0, 0, 0, .25);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 48px 16px 80px;
+      background: var(--bg); color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+    }
+    .wrap { max-width: 680px; margin: 0 auto; }
+
+    header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+    .logo { width: 44px; height: 44px; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); flex: none; }
+    .logo img { width: 100%; height: 100%; display: block; }
+    h1 { font-size: 22px; margin: 0; letter-spacing: .01em; }
+    header p { margin: 2px 0 0; font-size: 13px; color: var(--sub); }
+
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; box-shadow: var(--shadow);
+    }
+    .add-card { padding: 18px; margin-bottom: 24px; }
+    .add-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .field {
+      flex: 1; min-width: 220px; display: flex; align-items: center; gap: 8px;
+      border: 1px solid var(--border); border-radius: 10px; padding: 0 12px;
+      background: var(--bg); transition: border-color .15s, box-shadow .15s;
+    }
+    .field:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .field svg { width: 16px; height: 16px; color: var(--sub); flex: none; }
+    .field input {
+      flex: 1; border: 0; outline: 0; background: transparent; color: var(--text);
+      font-size: 14px; padding: 12px 0;
+    }
+    .field input::placeholder { color: var(--sub); }
+
+    .switch { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--sub); cursor: pointer; user-select: none; white-space: nowrap; }
+    .switch input { display: none; }
+    .track {
+      width: 36px; height: 20px; border-radius: 999px; background: var(--border);
+      position: relative; transition: background .2s; flex: none;
+    }
+    .track::after {
+      content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px;
+      border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .2s;
+    }
+    .switch input:checked + .track { background: var(--accent); }
+    .switch input:checked + .track::after { transform: translateX(16px); }
+    .switch input:checked ~ .label { color: var(--text); }
+
+    .btn-primary {
+      border: 0; border-radius: 10px; padding: 12px 20px; font-size: 14px; font-weight: 600;
+      color: #fff; background: var(--accent); cursor: pointer; transition: filter .15s, transform .05s;
+    }
+    .btn-primary:hover { filter: brightness(1.08); }
+    .btn-primary:active { transform: translateY(1px); }
+    #msg { min-height: 18px; margin-top: 10px; font-size: 13px; color: var(--danger); }
+
+    .list-head { display: flex; align-items: center; gap: 8px; margin: 0 4px 10px; font-size: 13px; color: var(--sub); font-weight: 600; }
+    .count { background: var(--accent-soft); color: var(--accent); border-radius: 999px; padding: 1px 9px; font-size: 12px; }
+
+    ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+    li.item {
+      display: flex; align-items: center; gap: 14px; padding: 12px 14px;
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      box-shadow: var(--shadow); animation: pop .2s ease;
+    }
+    @keyframes pop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+    .icon {
+      width: 36px; height: 36px; border-radius: 10px; flex: none; overflow: hidden;
+      display: grid; place-items: center; background: var(--accent-soft); color: var(--accent);
+      font-weight: 700; font-size: 16px; text-transform: uppercase;
+    }
+    .icon img { width: 22px; height: 22px; object-fit: contain; }
+    .icon.has-img { background: #fff; border: 1px solid var(--border); }
+
+    .meta { flex: 1; min-width: 0; }
+    .meta a { color: var(--text); font-weight: 600; font-size: 14px; text-decoration: none; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .meta a:hover { color: var(--accent); }
+    .meta small { display: block; color: var(--sub); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .pin-badge { font-size: 11px; color: var(--accent); background: var(--accent-soft); border-radius: 6px; padding: 2px 7px; margin-left: 6px; font-weight: 600; vertical-align: 1px; }
+
+    .del {
+      border: 0; background: transparent; color: var(--sub); width: 34px; height: 34px;
+      border-radius: 9px; cursor: pointer; display: grid; place-items: center; flex: none;
+      transition: background .15s, color .15s;
+    }
+    .del:hover { background: var(--danger-soft); color: var(--danger); }
+    .del svg { width: 18px; height: 18px; }
+
+    .empty { text-align: center; padding: 44px 16px; color: var(--sub); border: 1px dashed var(--border); border-radius: 14px; font-size: 14px; }
+    .empty svg { width: 36px; height: 36px; margin-bottom: 8px; opacity: .5; }
+
+    #toast {
+      position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px);
+      background: var(--text); color: var(--bg); padding: 10px 18px; border-radius: 999px;
+      font-size: 13px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
+    }
+    #toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .note { margin-top: 28px; font-size: 12px; color: var(--sub); text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo"><img src="icons/icon128.png" alt=""></div>
+      <div>
+        <h1>tab-starter</h1>
+        <p>Chrome起動時にまとめて開くページを登録します</p>
+      </div>
+    </header>
+
+    <section class="card add-card">
+      <div class="add-row">
+        <div class="field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>
+          <input id="url" type="text" placeholder="https://example.com" autocomplete="off">
+        </div>
+        <label class="switch">
+          <input id="pinned" type="checkbox">
+          <span class="track"></span>
+          <span class="label">固定タブ</span>
+        </label>
+        <button id="addBtn" class="btn-primary">追加</button>
+      </div>
+      <div id="msg"></div>
+    </section>
+
+    <div class="list-head">登録済みのページ <span id="count" class="count">0</span></div>
+    <ul id="list"></ul>
+
+    <p class="note">ファビコンはGoogleのファビコン配信またはサイトの /favicon.ico から取得します</p>
+  </div>
+  <div id="toast">保存しました</div>
+  <script src="options.js"></script>
+</body>
+</html>
